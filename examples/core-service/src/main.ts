@@ -1,16 +1,17 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { Transport } from '@nestjs/microservices';
 
 import { AppModule } from './app';
 
-const logger = new Logger('NestApplication', true);
+const logger = new Logger('NestApplication');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.connectMicroservice<MicroserviceOptions>({
+  app.connectMicroservice({
     transport: Transport.TCP,
   });
+
   await app.startAllMicroservicesAsync();
   await app.listen(3000);
   const url = await app.getUrl();
