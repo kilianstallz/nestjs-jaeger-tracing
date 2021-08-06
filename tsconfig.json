@@ -12,5 +12,5 @@
     "baseUrl": "./",
     "incremental": false
   },
-  "exclude": ["examples"]
+  "exclude": ["node_modules", "tests", "examples"]
 }

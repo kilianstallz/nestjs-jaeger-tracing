@@ -1,11 +1,11 @@
 {
   "name": "@kilianstallz/nestjs-jaeger-tracing",
-  "version": "8.0.1",
+  "version": "8.2.0",
   "description": "NestJS jaeger tracing",
   "license": "MIT",
-  "main": "dist/index",
+  "main": "dist/lib/index",
   "files": [
-    "dist/**/*"
+    "dist/lib/**/*"
   ],
   "publishConfig": {
     "access": "public"
@@ -87,7 +87,7 @@
     "ts-loader": "^8.0.4",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.0.3"
+    "typescript": "^4.3.5"
   },
   "jest": {
     "moduleFileExtensions": [
