@@ -1,4 +1,4 @@
-import { TracingModule } from '@dollarsign/nestjs-jaeger-tracing';
+import { TracingModule } from '@kilianstallz/nestjs-jaeger-tracing';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ClientsModule, Transport } from '@nestjs/microservices';

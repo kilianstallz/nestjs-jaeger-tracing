@@ -1,5 +1,4 @@
-import { IncomingHttpHeaders } from 'http';
-
+import { Logger } from '@nestjs/common';
 import { JaegerExporter } from '@opentelemetry/exporter-jaeger';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { TracerShim } from '@opentelemetry/shim-opentracing';
@@ -7,6 +6,7 @@ import {
   BatchSpanProcessor,
   SimpleSpanProcessor,
 } from '@opentelemetry/tracing';
+import { IncomingHttpHeaders } from 'http';
 import {
   FORMAT_HTTP_HEADERS,
   FORMAT_TEXT_MAP,
@@ -16,11 +16,12 @@ import {
   SpanContext,
   Tracer,
 } from 'opentracing';
-
 import { TracingData, TracingModuleOptions } from '../interfaces';
 
 export class TracerProvider {
   private static instance: TracerProvider;
+
+  private logger = new Logger('TracingProvider');
 
   private tracer: Tracer;
 
@@ -31,7 +32,8 @@ export class TracerProvider {
   }
 
   private static initialize(options: TracingModuleOptions): Tracer {
-    const { exporterConfig, isSimpleSpanProcessor, serviceName } = options;
+    const { exporterConfig, isSimpleSpanProcessor } = options;
+    const serviceName = exporterConfig.serviceName;
     const tracerProvider = new NodeTracerProvider();
     const exporter = new JaegerExporter(exporterConfig);
     const spanProcessor = isSimpleSpanProcessor
@@ -39,6 +41,7 @@ export class TracerProvider {
       : new BatchSpanProcessor(exporter);
     tracerProvider.addSpanProcessor(spanProcessor);
     tracerProvider.register();
+    console.log({ serviceName });
     const tracer = tracerProvider.getTracer(serviceName);
     initGlobalTracer(new TracerShim(tracer));
     return globalTracer();

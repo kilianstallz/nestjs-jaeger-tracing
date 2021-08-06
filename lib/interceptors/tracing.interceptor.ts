@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
-import { TcpContext } from '@nestjs/microservices';
 import { Request, Response } from 'express';
 import { GraphQLResolveInfo } from 'graphql';
 import { SpanContext, Tags, Tracer } from 'opentracing';
@@ -142,7 +141,7 @@ export class TracingInterceptor implements NestInterceptor {
             stack: error.stack,
           });
           span.finish();
-          return throwError(error);
+          return throwError(() => error);
         }),
       );
     }) as Observable<unknown>;
