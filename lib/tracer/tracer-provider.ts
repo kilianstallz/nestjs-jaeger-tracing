@@ -31,8 +31,7 @@ export class TracerProvider {
   }
 
   private static initialize(options: TracingModuleOptions): Tracer {
-    const { exporterConfig, isSimpleSpanProcessor } = options;
-    const { serviceName } = exporterConfig;
+    const { exporterConfig, isSimpleSpanProcessor, serviceName } = options;
     const tracerProvider = new NodeTracerProvider();
     const exporter = new JaegerExporter(exporterConfig);
     const spanProcessor = isSimpleSpanProcessor
